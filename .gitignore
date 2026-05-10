@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environment
+.venv/
+venv/
+env/
+
+# Environment Variables
+.env
+
+# IDE / Editor
+.vscode/
+.idea/
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Pytest
+.pytest_cache/
+.coverage
+htmlcov/
+
+# LangSmith
+.langsmith/
+
+# Logs
+*.log
+logs/
+storage/logs.json
+
+# SQLite / DB
+*.db
+*.sqlite3
+
+# ChromaDB Vector Store
+chroma_db/
+
+# Streamlit
+.streamlit/
+
+screenshots/
+data/tickets.json
