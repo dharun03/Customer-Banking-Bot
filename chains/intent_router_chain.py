@@ -2,7 +2,7 @@ from langchain_core.prompts import ChatPromptTemplate
 
 from langchain_core.output_parsers import PydanticOutputParser
 
-from services.llm_service import llm
+from services.llm_service import llm_service
 
 from schemas.response_schema import ChatResponse
 
@@ -39,8 +39,13 @@ User Query:
         ]
     ).partial(format_instructions=parser.get_format_instructions())
 
-    chain = prompt | llm | parser
+    formatted_prompt = prompt.format_messages(
+        query=query,
+        examples=formatted_examples,
+    )
 
-    response = chain.invoke({"query": query, "examples": formatted_examples})
+    response = llm_service.invoke(formatted_prompt)
 
-    return response
+    parsed_response = parser.parse(response.content)
+
+    return parsed_response

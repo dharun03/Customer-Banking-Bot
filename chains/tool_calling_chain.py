@@ -3,13 +3,11 @@ from langchain_core.messages import (
     SystemMessage,
 )
 
-from services.llm_service import llm
+from services.llm_service import llm_service
 
 from tools.tools_registry import TOOLS
 
 from prompts.agent_prompt import AGENT_SYSTEM_PROMPT
-
-llm_with_tools = llm.bind_tools(TOOLS)
 
 
 def run_tool_calling_chain(
@@ -23,6 +21,20 @@ def run_tool_calling_chain(
         HumanMessage(content=query),
     ]
 
-    response = llm_with_tools.invoke(messages)
+    try:
 
-    return response
+        llm_with_tools = llm_service.primary_llm.bind_tools(TOOLS)
+
+        response = llm_with_tools.invoke(messages)
+
+        return response
+
+    except Exception as openai_error:
+
+        print(f"Tool calling OpenAI failed: {openai_error}")
+
+        llm_with_tools = llm_service.fallback_llm.bind_tools(TOOLS)
+
+        response = llm_with_tools.invoke(messages)
+
+        return response

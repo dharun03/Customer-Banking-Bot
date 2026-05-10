@@ -4,7 +4,7 @@ from langchain_core.messages import (
     SystemMessage,
 )
 
-from services.llm_service import llm
+from services.llm_service import llm_service
 
 from memory.session_store import SESSION_STORE
 
@@ -105,24 +105,24 @@ Conversation Summary:
             conversation_text += f"{msg['role']}: " f"{msg['content']}\n"
 
         prompt = f"""
-You are a banking conversation summarizer.
+    You are a banking conversation summarizer.
 
-Existing Summary:
-{existing_summary}
+    Existing Summary:
+    {existing_summary}
 
-New Conversation:
-{conversation_text}
+    New Conversation:
+    {conversation_text}
 
-Generate an updated concise summary
-preserving important:
-- banking details
-- EMI discussions
-- complaint workflows
-- ticket IDs
-- customer issues
-- context for follow-up questions
-"""
+    Generate an updated concise summary
+    preserving important:
+    - banking details
+    - EMI discussions
+    - complaint workflows
+    - ticket IDs
+    - customer issues
+    - context for follow-up questions
+    """
 
-        response = llm.invoke(prompt)
+        response = llm_service.invoke([HumanMessage(content=prompt)])
 
         return response.content

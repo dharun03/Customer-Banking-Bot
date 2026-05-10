@@ -4,11 +4,15 @@ from langchain_core.prompts import ChatPromptTemplate
 
 from langchain_core.output_parsers import PydanticOutputParser
 
-from services.llm_service import llm
+from services.llm_service import llm_service
 
-from schemas.complaint_triage_schema import ComplaintTriageResponse
+from schemas.complaint_triage_schema import (
+    ComplaintTriageResponse,
+)
 
-from prompts.complaint_triage_prompt import COMPLAINT_TRIAGE_PROMPT
+from prompts.complaint_triage_prompt import (
+    COMPLAINT_TRIAGE_PROMPT,
+)
 
 parser = PydanticOutputParser(pydantic_object=ComplaintTriageResponse)
 
@@ -30,8 +34,6 @@ Customer Sentiment:
     ]
 ).partial(format_instructions=parser.get_format_instructions())
 
-chain = prompt | llm | parser
-
 
 @tool
 def complaint_triage_tool(
@@ -43,11 +45,13 @@ def complaint_triage_tool(
     and assign enterprise priority.
     """
 
-    response = chain.invoke(
-        {
-            "complaint": complaint,
-            "sentiment": sentiment,
-        }
+    formatted_messages = prompt.format_messages(
+        complaint=complaint,
+        sentiment=sentiment,
     )
 
-    return response.model_dump()
+    response = llm_service.invoke(formatted_messages)
+
+    parsed_response = parser.parse(response.content)
+
+    return parsed_response.model_dump()

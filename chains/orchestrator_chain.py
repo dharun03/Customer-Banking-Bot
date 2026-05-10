@@ -3,7 +3,7 @@ from langchain_core.messages import (
     SystemMessage,
 )
 
-from services.llm_service import llm
+from services.llm_service import llm_service
 
 from prompts.agent_prompt import AGENT_SYSTEM_PROMPT
 
@@ -38,7 +38,7 @@ def run_orchestrator(
         *tool_messages,
     ]
 
-    final_response = llm.invoke(final_messages)
+    final_response = llm_service.invoke(final_messages)
 
     content = final_response.content
 
