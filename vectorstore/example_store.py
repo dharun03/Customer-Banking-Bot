@@ -1,20 +1,40 @@
-from vectorstore.chroma_client import vectorstore
+import uuid
 
-from prompts.few_shots import FEW_SHOT_EXAMPLES
+from vectorstore.index_manager import (
+    vectorstore,
+)
+
+from prompts.few_shots import (
+    FEW_SHOT_EXAMPLES,
+)
 
 
 def load_examples():
 
-    documents = []
+    texts = []
 
     metadatas = []
 
+    ids = []
+
     for example in FEW_SHOT_EXAMPLES:
 
-        documents.append(example["query"])
+        texts.append(example["query"])
 
-        metadatas.append({"response": example["response"]})
+        metadatas.append(
+            {
+                "response": example["response"],
+                "type": "few_shot",
+                "domain": "banking",
+            }
+        )
 
-    vectorstore.add_texts(texts=documents, metadatas=metadatas)
+        ids.append(str(uuid.uuid4()))
 
-    print("Few-shot examples loaded.")
+    vectorstore.add_texts(
+        texts=texts,
+        metadatas=metadatas,
+        ids=ids,
+    )
+
+    print("Few-shot examples indexed in Pinecone.")

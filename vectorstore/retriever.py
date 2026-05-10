@@ -1,16 +1,28 @@
-from vectorstore.chroma_client import vectorstore
+from vectorstore.index_manager import (
+    vectorstore,
+)
 
 
-def retrieve_examples(query: str, k=2):
+def retrieve_examples(
+    query: str,
+    k: int = 3,
+):
 
-    results = vectorstore.similarity_search(query, k=k)
+    results = vectorstore.similarity_search_with_score(
+        query=query,
+        k=k,
+    )
 
     examples = []
 
-    for result in results:
+    for doc, score in results:
 
         examples.append(
-            {"query": result.page_content, "response": result.metadata["response"]}
+            {
+                "query": doc.page_content,
+                "response": doc.metadata["response"],
+                "score": score,
+            }
         )
 
     return examples

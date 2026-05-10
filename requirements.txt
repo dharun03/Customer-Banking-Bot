@@ -8,8 +8,10 @@ langchain-openai
 langchain-community
 langchain-core
 langchain-anthropic
+langchain-pinecone
 
 chromadb
+pinecone
 tiktoken
 
 pydantic
