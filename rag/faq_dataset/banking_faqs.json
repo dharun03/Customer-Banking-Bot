@@ -1,0 +1,243 @@
+[
+  {
+    "id": "faq_1",
+    "category": "kyc",
+    "question": "How do I complete KYC?",
+    "answer": "You can complete KYC online through internet banking or by visiting the nearest branch with valid identity and address proof documents."
+  },
+  {
+    "id": "faq_2",
+    "category": "kyc",
+    "question": "What documents are required for KYC verification?",
+    "answer": "You need a valid government-issued ID proof such as Aadhaar, PAN card, passport, or driving license along with address proof."
+  },
+  {
+    "id": "faq_3",
+    "category": "account",
+    "question": "How can I open a savings account?",
+    "answer": "You can open a savings account online through our website or by visiting a branch with your KYC documents."
+  },
+  {
+    "id": "faq_4",
+    "category": "account",
+    "question": "What is the minimum balance required for a savings account?",
+    "answer": "The minimum balance requirement depends on the account type and branch location. Please check the account terms for exact details."
+  },
+  {
+    "id": "faq_5",
+    "category": "debit_card",
+    "question": "How do I block my lost debit card?",
+    "answer": "You can block your debit card instantly using mobile banking, internet banking, or by calling customer support."
+  },
+  {
+    "id": "faq_6",
+    "category": "debit_card",
+    "question": "How long does it take to receive a replacement debit card?",
+    "answer": "A replacement debit card is usually delivered within 5 to 7 working days."
+  },
+  {
+    "id": "faq_7",
+    "category": "credit_card",
+    "question": "How can I apply for a credit card?",
+    "answer": "You can apply for a credit card online through our portal or visit a branch to submit the application."
+  },
+  {
+    "id": "faq_8",
+    "category": "credit_card",
+    "question": "Can I waive my credit card late payment fee?",
+    "answer": "Late payment fee waivers are reviewed on a case-by-case basis depending on your account history and payment behavior."
+  },
+  {
+    "id": "faq_9",
+    "category": "loan",
+    "question": "What is the eligibility criteria for a home loan?",
+    "answer": "Home loan eligibility depends on factors such as income, credit score, employment status, and repayment capacity."
+  },
+  {
+    "id": "faq_10",
+    "category": "loan",
+    "question": "How can I calculate my EMI?",
+    "answer": "You can use our EMI calculator by entering the loan amount, interest rate, and repayment tenure."
+  },
+  {
+    "id": "faq_11",
+    "category": "net_banking",
+    "question": "Why is my net banking account locked?",
+    "answer": "Your net banking account may be locked due to multiple incorrect login attempts. You can reset it using the forgot password option or contact support."
+  },
+  {
+    "id": "faq_12",
+    "category": "net_banking",
+    "question": "How do I reset my internet banking password?",
+    "answer": "You can reset your password online using the forgot password option and verifying your registered mobile number."
+  },
+  {
+    "id": "faq_13",
+    "category": "transaction",
+    "question": "What should I do if I notice an unauthorized transaction?",
+    "answer": "Immediately block your card or account access and report the transaction to customer support to raise a fraud complaint."
+  },
+  {
+    "id": "faq_14",
+    "category": "transaction",
+    "question": "How long does an NEFT transfer take?",
+    "answer": "NEFT transfers are usually processed within a few hours depending on the bank processing schedule."
+  },
+  {
+    "id": "faq_15",
+    "category": "transaction",
+    "question": "Why was a maintenance charge deducted from my account?",
+    "answer": "Maintenance charges may be deducted for non-maintenance of minimum balance or account servicing fees as per account terms."
+  },
+  {
+    "id": "faq_16",
+    "category": "mobile_banking",
+    "question": "How can I update my registered mobile number?",
+    "answer": "You can update your registered mobile number through internet banking or by visiting a branch with identity proof."
+  },
+  {
+    "id": "faq_17",
+    "category": "complaint",
+    "question": "How do I raise a complaint with the bank?",
+    "answer": "You can raise a complaint through customer care, internet banking, mobile banking, or by visiting the branch."
+  },
+  {
+    "id": "faq_18",
+    "category": "complaint",
+    "question": "How can I check the status of my complaint?",
+    "answer": "You can track your complaint status using the complaint reference number provided during complaint registration."
+  },
+  {
+    "id": "faq_19",
+    "category": "atm",
+    "question": "What should I do if the ATM did not dispense cash but my account was debited?",
+    "answer": "Please report the issue immediately. The amount is usually reversed automatically within 5 to 7 working days after verification."
+  },
+  {
+    "id": "faq_20",
+    "category": "account_closure",
+    "question": "What is the process for closing my bank account?",
+    "answer": "To close your account, submit an account closure request at your branch after clearing all dues and withdrawing the remaining balance."
+  },
+  {
+    "id": "faq_21",
+    "category": "upi",
+    "question": "Why is my UPI transaction pending?",
+    "answer": "UPI transactions may remain pending due to network issues, bank server downtime, or beneficiary bank delays. The amount is usually reversed automatically if the transaction fails."
+  },
+  {
+    "id": "faq_22",
+    "category": "upi",
+    "question": "How can I change my UPI PIN?",
+    "answer": "You can change your UPI PIN through your banking or UPI application using your debit card details and OTP verification."
+  },
+  {
+    "id": "faq_23",
+    "category": "cheque",
+    "question": "Why was my cheque bounced despite sufficient balance?",
+    "answer": "A cheque may bounce due to signature mismatch, incorrect cheque details, stale cheque, or technical verification issues."
+  },
+  {
+    "id": "faq_24",
+    "category": "cheque",
+    "question": "How do I request a new cheque book?",
+    "answer": "You can request a cheque book through internet banking, mobile banking, ATM, or by visiting your branch."
+  },
+  {
+    "id": "faq_25",
+    "category": "fixed_deposit",
+    "question": "How can I open a fixed deposit account?",
+    "answer": "You can open a fixed deposit online through internet banking or by visiting a branch with your account details."
+  },
+  {
+    "id": "faq_26",
+    "category": "fixed_deposit",
+    "question": "Can I withdraw my fixed deposit before maturity?",
+    "answer": "Yes, premature withdrawal is allowed, but a penalty or reduced interest rate may apply."
+  },
+  {
+    "id": "faq_27",
+    "category": "interest_rate",
+    "question": "How are savings account interest rates calculated?",
+    "answer": "Savings account interest is usually calculated daily based on the closing balance and credited periodically."
+  },
+  {
+    "id": "faq_28",
+    "category": "interest_rate",
+    "question": "Where can I check the latest loan interest rates?",
+    "answer": "You can view the latest interest rates on our official website or contact customer support."
+  },
+  {
+    "id": "faq_29",
+    "category": "mobile_banking",
+    "question": "Why is my mobile banking app not working?",
+    "answer": "Please ensure you have a stable internet connection, updated app version, and correct login credentials."
+  },
+  {
+    "id": "faq_30",
+    "category": "mobile_banking",
+    "question": "How do I activate mobile banking services?",
+    "answer": "You can activate mobile banking by registering through the app using your account and debit card details."
+  },
+  {
+    "id": "faq_31",
+    "category": "atm",
+    "question": "What should I do if my ATM card is retained by the machine?",
+    "answer": "Immediately contact customer support or visit the nearest branch to block the card and request a replacement."
+  },
+  {
+    "id": "faq_32",
+    "category": "atm",
+    "question": "What is the daily ATM withdrawal limit?",
+    "answer": "ATM withdrawal limits vary depending on your account type and debit card category."
+  },
+  {
+    "id": "faq_33",
+    "category": "loan",
+    "question": "Can I prepay my personal loan before the tenure ends?",
+    "answer": "Yes, personal loan prepayment is allowed subject to applicable prepayment charges and terms."
+  },
+  {
+    "id": "faq_34",
+    "category": "loan",
+    "question": "How long does loan approval usually take?",
+    "answer": "Loan approval timelines depend on document verification and eligibility checks but are usually completed within a few working days."
+  },
+  {
+    "id": "faq_35",
+    "category": "security",
+    "question": "How can I protect myself from phishing scams?",
+    "answer": "Never share your OTP, PIN, passwords, or banking credentials with anyone and avoid clicking suspicious links."
+  },
+  {
+    "id": "faq_36",
+    "category": "security",
+    "question": "Does the bank ever ask for OTP over phone calls?",
+    "answer": "No, bank representatives will never ask for your OTP, PIN, or passwords over calls or messages."
+  },
+  {
+    "id": "faq_37",
+    "category": "statement",
+    "question": "How can I download my bank statement?",
+    "answer": "You can download your account statement through internet banking or mobile banking in PDF or Excel format."
+  },
+  {
+    "id": "faq_38",
+    "category": "statement",
+    "question": "Can I request account statements for the past year?",
+    "answer": "Yes, historical account statements can be downloaded online or requested from the branch."
+  },
+  {
+    "id": "faq_39",
+    "category": "beneficiary",
+    "question": "How do I add a new beneficiary for fund transfers?",
+    "answer": "You can add a beneficiary through internet banking by entering the beneficiary account details and verifying with OTP."
+  },
+  {
+    "id": "faq_40",
+    "category": "beneficiary",
+    "question": "Why is there a cooling period after adding a beneficiary?",
+    "answer": "The cooling period is a security measure to prevent unauthorized fund transfers to newly added beneficiaries."
+  }
+
+]

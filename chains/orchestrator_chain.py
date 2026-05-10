@@ -13,6 +13,10 @@ from chains.tool_executor import execute_tools
 
 from memory.hybrid_memory import HybridMemoryManager
 
+from rag.retriever.retrieval_pipeline import (
+    run_rag_pipeline,
+)
+
 
 def run_orchestrator(
     query: str,
@@ -23,6 +27,18 @@ def run_orchestrator(
 
     memory_messages = memory_manager.get_context_messages()
 
+    rag_result = run_rag_pipeline(query)
+
+    rag_messages = []
+
+    if rag_result:
+
+        rag_messages.append(SystemMessage(content=f"""
+    FAQ Context:
+
+    {rag_result['context']}
+    """))
+
     initial_response = run_tool_calling_chain(
         query,
         memory_messages,
@@ -32,6 +48,7 @@ def run_orchestrator(
 
     final_messages = [
         SystemMessage(content=AGENT_SYSTEM_PROMPT),
+        *rag_messages,
         *memory_messages,
         HumanMessage(content=query),
         initial_response,
