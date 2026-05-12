@@ -17,6 +17,10 @@ from rag.retriever.retrieval_pipeline import (
     run_rag_pipeline,
 )
 
+from document_upload.hybrid_retriever import (
+    retrieve_document_context,
+)
+
 
 def run_orchestrator(
     query: str,
@@ -28,6 +32,21 @@ def run_orchestrator(
     memory_messages = memory_manager.get_context_messages()
 
     rag_result = run_rag_pipeline(query)
+
+    document_context = retrieve_document_context(
+        query=query,
+        session_id=session_id,
+    )
+
+    document_messages = []
+
+    if document_context:
+
+        document_messages.append(SystemMessage(content=f"""
+    Document Context:
+
+    {document_context}
+    """))
 
     rag_messages = []
 
@@ -48,6 +67,7 @@ def run_orchestrator(
 
     final_messages = [
         SystemMessage(content=AGENT_SYSTEM_PROMPT),
+        *document_messages,
         *rag_messages,
         *memory_messages,
         HumanMessage(content=query),

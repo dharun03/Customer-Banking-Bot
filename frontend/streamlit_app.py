@@ -8,6 +8,11 @@ st.set_page_config(page_title="Banking AI Assistant")
 
 st.title("🏦 Banking Customer Assistant")
 
+uploaded_file = st.file_uploader(
+    "Upload Bank Statement",
+    type=["pdf", "png", "jpg", "jpeg"],
+)
+
 if "session_id" not in st.session_state:
 
     st.session_state.session_id = str(uuid.uuid4())
@@ -23,6 +28,28 @@ for message in st.session_state.messages:
 
         st.markdown(message["content"])
 
+if uploaded_file:
+
+    with st.spinner("Uploading document..."):
+
+        response = requests.post(
+            "http://localhost:8000/document/upload",
+            params={"session_id": st.session_state.session_id},
+            files={
+                "file": (
+                    uploaded_file.name,
+                    uploaded_file.getvalue(),
+                )
+            },
+        )
+
+        if response.status_code == 200:
+
+            st.success("Document uploaded successfully")
+
+        else:
+
+            st.error("Upload failed")
 
 query = st.chat_input("Ask your banking question")
 

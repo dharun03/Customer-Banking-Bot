@@ -20,3 +20,8 @@ streamlit
 requests
 
 pytest
+
+pytesseract
+pdf2image 
+pillow 
+rank-bm25
