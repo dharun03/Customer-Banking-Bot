@@ -1,11 +1,6 @@
-from langchain_core.tools import tool
+import requests
 
-MOCK_RATES = {
-    "USD_INR": 83.2,
-    "EUR_INR": 90.5,
-    "GBP_INR": 105.7,
-    "INR_USD": 0.012,
-}
+from langchain_core.tools import tool
 
 
 @tool
@@ -15,21 +10,58 @@ def currency_exchange_tool(
     to_currency: str,
 ):
     """
-    Convert currency using mock exchange rates.
+    Convert currency using real-time exchange rates.
     """
 
-    key = f"{from_currency.upper()}_{to_currency.upper()}"
+    try:
 
-    rate = MOCK_RATES.get(key)
+        from_currency = from_currency.upper()
+        to_currency = to_currency.upper()
 
-    if not rate:
-        return {"error": "Unsupported currency pair"}
-    converted_amount = amount * rate
+        url = f"https://open.er-api.com/v6/latest/" f"{from_currency}"
 
-    return {
-        "amount": amount,
-        "from_currency": from_currency,
-        "to_currency": to_currency,
-        "exchange_rate": rate,
-        "converted_amount": round(converted_amount, 2),
-    }
+        response = requests.get(
+            url,
+            timeout=10,
+        )
+
+        response.raise_for_status()
+
+        data = response.json()
+
+        if data.get("result") != "success":
+
+            return {"error": "Failed to fetch exchange rates"}
+
+        rates = data.get("rates", {})
+
+        if to_currency not in rates:
+
+            return {"error": (f"Unsupported currency: " f"{to_currency}")}
+
+        exchange_rate = rates[to_currency]
+
+        converted_amount = amount * exchange_rate
+
+        return {
+            "amount": amount,
+            "from_currency": from_currency,
+            "to_currency": to_currency,
+            "exchange_rate": round(exchange_rate, 4),
+            "converted_amount": round(
+                converted_amount,
+                2,
+            ),
+        }
+
+    except requests.exceptions.Timeout:
+
+        return {"error": "Currency API timeout"}
+
+    except requests.exceptions.RequestException as e:
+
+        return {"error": f"API request failed: {str(e)}"}
+
+    except Exception as e:
+
+        return {"error": f"Unexpected error: {str(e)}"}
