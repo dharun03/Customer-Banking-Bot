@@ -4,6 +4,8 @@ import requests
 
 import uuid
 
+BACKEND_URL = "http://backend:8000"
+
 st.set_page_config(page_title="Banking AI Assistant")
 
 st.title("🏦 Banking Customer Assistant")
@@ -33,7 +35,7 @@ if uploaded_file:
     with st.spinner("Uploading document..."):
 
         response = requests.post(
-            "http://localhost:8000/document/upload",
+            f"{BACKEND_URL}/document/upload",
             params={"session_id": st.session_state.session_id},
             files={
                 "file": (
@@ -67,7 +69,7 @@ if query:
         st.markdown(query)
 
     response = requests.post(
-        "http://localhost:8000/chat",
+        f"{BACKEND_URL}/chat",
         json={
             "query": query,
             "session_id": st.session_state.session_id,
