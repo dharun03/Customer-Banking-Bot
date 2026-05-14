@@ -21,6 +21,8 @@ from document_upload.hybrid_retriever import (
     retrieve_document_context,
 )
 
+from guardrails.pii_masker import mask_pii
+
 
 def run_orchestrator(
     query: str,
@@ -79,9 +81,11 @@ def run_orchestrator(
 
     content = final_response.content
 
+    safe_content = mask_pii(content)
+
     memory_manager.save_context(
         query,
-        content,
+        safe_content,
     )
 
-    return content
+    return safe_content

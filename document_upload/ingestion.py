@@ -12,6 +12,8 @@ from document_upload.hybrid_retriever import (
     add_to_bm25_store,
 )
 
+from guardrails.pii_masker import mask_pii
+
 
 def ingest_document(
     file_path: str,
@@ -21,7 +23,9 @@ def ingest_document(
 
     extracted_text = extract_text(file_path)
 
-    chunks = chunk_document(extracted_text)
+    safe_text = mask_pii(extracted_text)
+
+    chunks = chunk_document(safe_text)
 
     documents = []
 

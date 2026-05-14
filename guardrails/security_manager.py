@@ -6,6 +6,8 @@ from guardrails.injection_detector import detect_injection
 
 from guardrails.jailbreak_detector import detect_jailbreak
 
+from guardrails.pii_masker import mask_pii
+
 
 def validate_query(query: str):
 
@@ -13,16 +15,24 @@ def validate_query(query: str):
 
     pii_found = detect_pii(sanitized_query)
 
-    if pii_found:
+    masked_query = mask_pii(sanitized_query)
 
-        return {"allowed": False, "reason": f"PII detected: {pii_found}"}
+    if detect_injection(masked_query):
 
-    if detect_injection(sanitized_query):
+        return {
+            "allowed": False,
+            "reason": "Prompt injection detected",
+        }
 
-        return {"allowed": False, "reason": "Prompt injection detected"}
+    if detect_jailbreak(masked_query):
 
-    if detect_jailbreak(sanitized_query):
+        return {
+            "allowed": False,
+            "reason": "Jailbreak attempt detected",
+        }
 
-        return {"allowed": False, "reason": "Jailbreak attempt detected"}
-
-    return {"allowed": True, "query": sanitized_query}
+    return {
+        "allowed": True,
+        "query": masked_query,
+        "pii_detected": pii_found,
+    }
