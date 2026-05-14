@@ -23,68 +23,120 @@ from document_upload.hybrid_retriever import (
 
 from guardrails.pii_masker import mask_pii
 
+from chains.intent_router_chain import (
+    run_intent_chain,
+)
+
+from chains.guardrail_chain import (
+    run_guardrail_chain,
+)
+
 
 def run_orchestrator(
     query: str,
     session_id: str,
 ):
 
+    # Mask incoming query
+    safe_query = mask_pii(query)
+
+    # Run guardrails
+    guardrail_result = run_guardrail_chain(safe_query)
+
+    # Block unsafe queries
+    if guardrail_result.status.lower() == "blocked":
+
+        return f"""
+Request blocked by security guardrails.
+
+Reason:
+{guardrail_result.reason}
+"""
+
+    # Run intent routing
+    intent_result = run_intent_chain(safe_query)
+
+    # Initialize memory manager
     memory_manager = HybridMemoryManager(session_id)
 
+    # Load memory messages
     memory_messages = memory_manager.get_context_messages()
 
-    rag_result = run_rag_pipeline(query)
+    # Run FAQ RAG retrieval
+    rag_result = run_rag_pipeline(safe_query)
 
+    # Run document retrieval
     document_context = retrieve_document_context(
-        query=query,
+        query=safe_query,
         session_id=session_id,
     )
 
+    # Store document messages
     document_messages = []
 
     if document_context:
 
         document_messages.append(SystemMessage(content=f"""
-    Document Context:
+Document Context:
 
-    {document_context}
-    """))
+{document_context}
+"""))
 
+    # Store FAQ messages
     rag_messages = []
 
     if rag_result:
 
         rag_messages.append(SystemMessage(content=f"""
-    FAQ Context:
+FAQ Context:
 
-    {rag_result['context']}
-    """))
+{rag_result['context']}
+"""))
 
+    # Add intent routing metadata
+    routing_message = SystemMessage(content=f"""
+Intent Classification:
+
+Intent: {intent_result.intent}
+
+Sentiment: {intent_result.sentiment}
+
+Confidence: {intent_result.confidence}
+
+Escalation Required:
+{intent_result.escalation_required}
+""")
+
+    # Run tool calling layer
     initial_response = run_tool_calling_chain(
-        query,
+        safe_query,
         memory_messages,
     )
 
+    # Execute tools
     tool_messages = execute_tools(initial_response)
 
+    # Build final orchestration prompt
     final_messages = [
         SystemMessage(content=AGENT_SYSTEM_PROMPT),
+        routing_message,
         *document_messages,
         *rag_messages,
         *memory_messages,
-        HumanMessage(content=query),
+        HumanMessage(content=safe_query),
         initial_response,
         *tool_messages,
     ]
 
+    # Generate final response
     final_response = llm_service.invoke(final_messages)
 
-    content = final_response.content
+    # Mask outgoing response
+    safe_content = mask_pii(final_response.content)
 
-    safe_content = mask_pii(content)
-
+    # Save conversation memory
     memory_manager.save_context(
-        query,
+        safe_query,
         safe_content,
     )
 
