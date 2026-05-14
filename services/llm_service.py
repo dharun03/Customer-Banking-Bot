@@ -14,15 +14,15 @@ class LLMService:
 
     def __init__(self):
 
-        self.primary_llm = ChatOpenAI(
-            model=os.getenv("MODEL_NAME"),
+        self.primary_llm = ChatAnthropic(
+            model=os.getenv("ANTHROPIC_MODEL"),
             temperature=float(os.getenv("TEMPERATURE")),
             timeout=30,
             max_retries=2,
         )
 
-        self.fallback_llm = ChatAnthropic(
-            model=os.getenv("ANTHROPIC_MODEL"),
+        self.fallback_llm = ChatOpenAI(
+            model=os.getenv("OPENAI_MODEL_NAME"),
             temperature=float(os.getenv("TEMPERATURE")),
             timeout=30,
             max_retries=2,
@@ -35,7 +35,7 @@ class LLMService:
 
         try:
 
-            print("Using OpenAI...")
+            print("Using Claude...")
 
             response = self.primary_llm.invoke(messages)
 
@@ -44,24 +44,24 @@ class LLMService:
 
             return response
 
-        except Exception as openai_error:
+        except Exception as claude_error:
 
-            print(f"OpenAI failed: {openai_error}")
+            print(f"Claude failed: {claude_error}")
 
             try:
 
-                print("Switching to Claude fallback...")
+                print("Switching to OpenAI fallback...")
 
                 response = self.fallback_llm.invoke(messages)
 
                 if not response.content:
-                    raise ValueError("Empty response from Claude")
+                    raise ValueError("Empty response from Openai")
 
                 return response
 
-            except Exception as claude_error:
+            except Exception as openai_error:
 
-                print(f"Claude fallback failed: {claude_error}")
+                print(f"Claude fallback failed: {openai_error}")
 
                 raise Exception("Both OpenAI and Claude failed.")
 
